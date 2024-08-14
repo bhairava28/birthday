@@ -1,0 +1,81 @@
+body {
+    background-color: #ffe4e1;
+    font-family: 'Arial', sans-serif;
+    color: #4a154b;
+    text-align: center;
+    padding: 50px;
+    overflow: hidden; /* Prevents scrollbars from appearing */
+    position: relative;
+}
+
+h1, h2, p {
+    z-index: 10; /* Ensure text is on top of the background animation */
+    position: relative;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    color: #ff69b4;
+}
+
+h2 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+p {
+    font-size: 1.5em;
+    margin-top: 1em;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to right, #ffcccb, #ffe4e1, #ffebcd);
+    position: relative; /* Ensure flowers are positioned within the container */
+    overflow: hidden; /* Prevent flowers from escaping the container */
+}
+
+/* Static background flowers with movement */
+.background-flower {
+    position: absolute;
+    font-size: 3em;
+    opacity: 0.7;
+    pointer-events: none;
+    animation: moveBackground 30s linear infinite; /* Adjust duration for more movement */
+}
+
+@keyframes moveBackground {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0.5;
+    }
+}
+
+/* Animated flowers within the container */
+.flower {
+    position: absolute;
+    font-size: 2.5em; /* Larger flowers */
+    opacity: 0.9;
+    animation: float 10s linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
