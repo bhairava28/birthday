@@ -1,81 +1,234 @@
-body {
-    background-color: #ffe4e1;
-    font-family: 'Arial', sans-serif;
-    color: #4a154b;
-    text-align: center;
-    padding: 50px;
-    overflow: hidden; /* Prevents scrollbars from appearing */
-    position: relative;
+/* Cute birthday card – mobile-first, cleaned-up */
+:root{
+  --bg:#fff6fa;
+  --fg:#2a2a2a;
+  --accent:#ff9ac4;
+  --accent-2:#ffb5a7;
+  --paper:#ffffff;
+  --shadow:0 8px 28px rgba(0,0,0,.08);
+  --radius:16px;
 }
 
-h1, h2, p {
-    z-index: 10; /* Ensure text is on top of the background animation */
-    position: relative;
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--fg);
+  background:radial-gradient(1200px 800px at 70% -10%,#ffe0ea 0%,transparent 60%),
+             radial-gradient(1000px 800px at -20% 10%,#e3f2ff 0%,transparent 55%),
+             var(--bg);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-h1 {
-    font-size: 3em;
-    margin-bottom: 0.5em;
-    color: #ff69b4;
+/* Confetti canvas */
+#confetti{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
 }
 
-h2 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
+/* Floating balloons */
+.sky{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  z-index:1;
+  opacity:.55;
+}
+.balloon{
+  position:absolute;
+  bottom:-10vh;
+  left:var(--x);
+  font-size:clamp(28px,5vw,60px);
+  filter:drop-shadow(0 6px 6px rgba(0,0,0,.15));
+  animation:rise var(--d) linear infinite;
+}
+@keyframes rise{
+  0%{transform:translateY(0) rotate(5deg)}
+  50%{transform:translateY(-55vh) rotate(-5deg)}
+  100%{transform:translateY(-110vh) rotate(5deg)}
 }
 
-p {
-    font-size: 1.5em;
-    margin-top: 1em;
+/* Main card */
+.card{
+  position:relative;
+  z-index:2;
+  max-width:900px;
+  margin:min(6vh,4rem) auto 3rem;
+  padding:clamp(12px,3vw,24px);
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(to right, #ffcccb, #ffe4e1, #ffebcd);
-    position: relative; /* Ensure flowers are positioned within the container */
-    overflow: hidden; /* Prevent flowers from escaping the container */
+/* Envelope intro */
+.envelope{
+  width:min(520px,92vw);
+  margin:0 auto 22px;
+  height:260px;
+  border:none;
+  background:linear-gradient(180deg,#ffd6e5,#ffc5db);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  position:relative;
+  cursor:pointer;
+  transition:transform .2s ease;
+}
+.envelope:hover{transform:translateY(-2px) scale(1.01)}
+.envelope .flap{
+  position:absolute;
+  inset:0;
+  clip-path:polygon(0 0,100% 0,50% 60%);
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  border-top-left-radius:var(--radius);
+  border-top-right-radius:var(--radius);
+}
+.envelope .letter{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-40%);
+  width:85%;
+  background:var(--paper);
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  padding:clamp(16px,3vw,24px);
+  text-align:center;
+}
+.envelope .letter span:first-child{
+  font-weight:700;
+  font-size:clamp(20px,4vw,26px);
+}
+.envelope .letter .tiny{
+  display:block;
+  opacity:.7;
+  font-size:11px;
+  margin-top:4px;
 }
 
-/* Static background flowers with movement */
-.background-flower {
-    position: absolute;
-    font-size: 3em;
-    opacity: 0.7;
-    pointer-events: none;
-    animation: moveBackground 30s linear infinite; /* Adjust duration for more movement */
+/* Revealed content */
+.content{
+  display:none;
+  background:var(--paper);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  padding:clamp(20px,4vw,36px);
+}
+h1{
+  font-family:'Pacifico',cursive;
+  font-size:clamp(32px,7vw,60px);
+  margin:0 0 8px;
+  line-height:1.05;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.tagline{
+  margin:0 0 20px;
+  font-size:clamp(15px,2.7vw,19px);
+  opacity:.85;
 }
 
-@keyframes moveBackground {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0.7;
-    }
-    100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0.5;
-    }
+/* Polaroid */
+.polaroid{
+  display:grid;
+  place-items:center;
+  margin:10px 0 22px;
+}
+.frame{
+  position:relative;
+  width:min(420px,85vw);
+  aspect-ratio:1/1.05;
+  padding:clamp(12px,3vw,16px);
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 14px 40px rgba(0,0,0,.12);
+  transform:rotate(-1.5deg);
+}
+.frame .shine{
+  position:absolute;
+  inset:0;
+  border-radius:12px;
+  background:linear-gradient(130deg,rgba(255,255,255,.6),rgba(255,255,255,0) 30%);
+  pointer-events:none;
+}
+.photo{
+  position:relative;
+  height:100%;
+  border-radius:8px;
+  background:radial-gradient(120% 100% at 80% 0%,#ffe3ee 0%,transparent 70%),#faf7ff;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+.photo .emoji{
+  font-size:clamp(60px,12vw,100px);
+  filter:drop-shadow(0 8px 10px rgba(0,0,0,.15));
+}
+.caption{
+  display:block;
+  text-align:center;
+  margin-top:10px;
+  font-weight:600;
+  opacity:.8;
 }
 
-/* Animated flowers within the container */
-.flower {
-    position: absolute;
-    font-size: 2.5em; /* Larger flowers */
-    opacity: 0.9;
-    animation: float 10s linear infinite;
+/* Typewriter message */
+.typewriter{
+  margin:18px 0 12px;
+  min-height:48px;
+  font-size:clamp(17px,3vw,21px);
+  line-height:1.6;
+  white-space:pre-wrap;
 }
 
-@keyframes float {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-100px) rotate(360deg);
-        opacity: 0;
-    }
+/* Buttons */
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:10px 0 0;
+}
+.buttons > *{
+  border:none;
+  text-decoration:none;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#fff;
+  padding:clamp(10px,2vw,14px) clamp(14px,3vw,20px);
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:transform .15s ease,box-shadow .15s ease;
+  box-shadow:0 10px 28px rgba(132,94,247,.25);
+  font-size:clamp(14px,2.5vw,16px);
+}
+.buttons > *:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 34px rgba(132,94,247,.35);
+}
+.buttons #replay{
+  background:#111;
+  box-shadow:0 10px 28px rgba(0,0,0,.15);
+}
+
+/* Footer */
+footer{
+  margin-top:12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.countdown,.byline{
+  font-size:12px;
+  opacity:.7;
+}
+
+/* Extra-small tweaks */
+@media (max-width:520px){
+  .envelope{height:220px}
+}
+@media (max-width:400px){
+  .envelope{height:200px}
 }
