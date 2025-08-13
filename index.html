@@ -1,22 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday!</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Happy Birthday, {{HER_NAME}} 🎂💖</title>
+  <meta name="description" content="A tiny birthday website made just for you."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
+  <canvas id="confetti"></canvas>
 
-    <div class="container">
-        <h1 id="title"></h1>
-        <h2 id="subtitle"></h2>
-        
-        <p id="message"></p>
-        
-        <p>With love, Bhairava</p>
-    </div>
+  <div class="sky">
+    <span class="balloon" style="--x:10%; --d:14s;">🎈</span>
+    <span class="balloon" style="--x:30%; --d:16s;">🎈</span>
+    <span class="balloon" style="--x:55%; --d:18s;">🎈</span>
+    <span class="balloon" style="--x:75%; --d:20s;">🎈</span>
+    <span class="balloon" style="--x:90%; --d:22s;">🎈</span>
+  </div>
 
-    <script src="script.js"></script>
+  <main class="card">
+    <button class="envelope" id="openBtn" aria-label="Open the card">
+      <div class="flap"></div>
+      <div class="letter">
+        <span>Tap to open</span>
+        <span class="tiny">made just for you 💌</span>
+      </div>
+    </button>
+
+    <section class="content" id="content">
+      <h1 id="headline"></h1>
+      <p class="tagline" id="tagline"></p>
+
+      <div class="polaroid">
+        <div class="frame">
+          <div class="shine"></div>
+          <div class="photo" id="photo">
+            <div class="emoji">💖</div>
+          </div>
+        </div>
+        <span class="caption" id="caption"></span>
+      </div>
+
+      <div class="typewriter" id="tw"></div>
+
+      <div class="buttons">
+        <button id="replay">Replay 💫</button>
+      </div>
+
+      <footer>
+        <div class="countdown" id="countdown"></div>
+        <div class="byline" id="byline"></div>
+      </footer>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
